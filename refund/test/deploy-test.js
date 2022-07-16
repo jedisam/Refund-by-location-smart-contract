@@ -22,5 +22,34 @@ describe("Refund", () => {
     assert.equal(currentValue.toString(), expectValue);
   });
 
-  
+  it("Should create an employee with the given details", async () => {
+    const tx = await refund.createEmployee(
+      "0x3AB46836Ca9e5A5b517017bE886b6deB7Bab575F",
+      "Abe",
+      "142",
+      "56",
+      "1"
+    );
+    await tx.wait(1);
+    const currentValue = await refund.getEmployeeDetail(
+      "0x3AB46836Ca9e5A5b517017bE886b6deB7Bab575F"
+    );
+    const expectValue = ["Abe", 142, 56, 1];
+    // assert
+    // expect
+    console.log(currentValue);
+    assert.equal(currentValue[0].toString(), expectValue[0]);
+    assert.equal(currentValue[1].toString(), expectValue[1]);
+    assert.equal(currentValue[2].toString(), expectValue[2]);
+    assert.equal(currentValue[3].toString(), expectValue[3]);
+  });
+
+  // it("should be update when we call store", async () => {
+  //   const expectedValue = "42";
+  //   const tx = await simpleStorage.store(expectedValue);
+  //   await tx.wait(1);
+
+  //   const currentValue = await simpleStorage.retrieve();
+  //   assert.equal(currentValue.toString(), expectedValue);
+  // });
 });
