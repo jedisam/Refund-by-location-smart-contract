@@ -6,10 +6,12 @@ require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("./tasks/block-number");
 require("./tasks/accounts");
+require("solidity-coverage");
 
-const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
+const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL || "https://eth-rinkeby";
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x";
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "API_KEY";
+const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "API_KEY";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -47,7 +49,10 @@ module.exports = {
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
+    outputFile: "gas-report.txt",
+    noColors: true,
     currency: "USD",
+    coinmarketcap: COINMARKETCAP_API_KEY,
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
