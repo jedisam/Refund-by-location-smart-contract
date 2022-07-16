@@ -18,7 +18,6 @@ describe("Refund", () => {
     const currentValue = await refund.getOwner();
     const expectValue = "0x821a33B8C77AB501b5c7269DF73D80Db82048Eb2";
     // assert
-    // expect
     assert.equal(currentValue.toString(), expectValue);
   });
 
@@ -36,20 +35,10 @@ describe("Refund", () => {
     );
     const expectValue = ["Abe", 142, 56, 1];
     // assert
-    // expect
     console.log(currentValue);
     assert.equal(currentValue[0].toString(), expectValue[0]);
     assert.equal(currentValue[1].toString(), expectValue[1]);
     assert.equal(currentValue[2].toString(), expectValue[2]);
     assert.equal(currentValue[3].toString(), expectValue[3]);
   });
-
-  // it("should be update when we call store", async () => {
-  //   const expectedValue = "42";
-  //   const tx = await simpleStorage.store(expectedValue);
-  //   await tx.wait(1);
-
-  //   const currentValue = await simpleStorage.retrieve();
-  //   assert.equal(currentValue.toString(), expectedValue);
-  // });
 });
