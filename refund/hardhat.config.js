@@ -2,6 +2,7 @@ require("dotenv").config();
 
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
+require("hardhat-deploy");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("./tasks/block-number");
@@ -51,5 +52,10 @@ module.exports = {
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
   },
 };
