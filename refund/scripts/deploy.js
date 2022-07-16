@@ -11,6 +11,7 @@ async function main() {
   if (network.config.chainId === 4 && process.env.ETHERSCAN_API_KEY) {
     await refund.deployTransaction.wait(6);
     await verify(refund.address, []);
+    console.log("Verified contract");
   }
 }
 
