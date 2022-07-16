@@ -21,6 +21,10 @@ contract Refund {
         console.log("Deploying a Refund with Owner:", owner);
     }
 
+    function getOwner() public view returns (address) {
+        return owner;
+    }
+
     function createEmployee(address empAddress, string memory name, uint256 lat, uint256 lon, uint256 allowedDistance) public {
         // restrict employee creation to owner
         require(msg.sender == owner);
