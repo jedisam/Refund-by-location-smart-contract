@@ -40,6 +40,10 @@ contract Refund {
         return (employeeDetail[empAddress].name, employeeDetail[empAddress].lat, employeeDetail[empAddress].lon, employeeDetail[empAddress].allowedDistance);
     }
 
+    function getEmployees() public view returns (address[] memory) {
+        return employees;
+    }
+
     function ingestCoordinate(uint256 lat, uint256 lon, uint256 etimestamp) public  {
        require(etimestamp >= 0 && etimestamp <= 86400);
        uint256 distance = calculateDistance(lat, lon);
