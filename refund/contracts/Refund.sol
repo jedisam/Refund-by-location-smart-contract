@@ -11,18 +11,20 @@ contract Refund {
         uint256 lon;
         uint256 allowedDistance;
     }
+    struct conditionDetail {
+        string status;
+        bool condition;
+    }
+
     mapping (address => EmployeeDetail) employeeDetail;
-    mapping(address => bool) public employeeCondition;
+    // mapping(address => bool) public employeeCondition;
+    mapping(address => conditionDetail) public employeeCondition;
     address[] public employees;
 
 
     constructor() {
         owner = msg.sender;
         console.log("Deploying a Refund with Owner:", owner);
-    }
-
-    function getOwner() public view returns (address) {
-        return owner;
     }
 
     function createEmployee(address empAddress, string memory name, uint256 lat, uint256 lon, uint256 allowedDistance) public {
@@ -36,27 +38,41 @@ contract Refund {
         employeeDetail[empAddress].lon = lon;
         // set the Employee's allowed distance using the employeeDetail mapping
         employeeDetail[empAddress].allowedDistance = allowedDistance;
+
+        // Set default employee condition to not verified
+        employeeCondition[empAddress].status = "Not Verified";
+        employeeCondition[empAddress].condition = false;
+
         // push user address into userAddresses array
         employees.push(empAddress);
     }
 
+
+
+    
     function getEmployeeDetail(address empAddress) public view returns (string memory, uint256, uint256, uint256) {
         return (employeeDetail[empAddress].name, employeeDetail[empAddress].lat, employeeDetail[empAddress].lon, employeeDetail[empAddress].allowedDistance);
     }
 
-    function getEmployees() public view returns (address[] memory) {
-        return employees;
-    }
-
-    function ingestCoordinate(uint256 lat, uint256 lon, uint256 etimestamp) public  {
-       require(etimestamp >= 0 && etimestamp <= 86400);
+    function ingestCoordinate(address empAdderss, uint256 lat, uint256 lon, uint256 etimestamp) public  {
+       require(etimestamp >= 0 && etimestamp <= 12 || etimestamp >= 18 && etimestamp <= 22);
        uint256 distance = calculateDistance(lat, lon);
-       if (distance > employeeDetail[msg.sender].allowedDistance) {
-           employeeCondition[msg.sender] = false;
+       
+       if (distance > employeeDetail[empAdderss].allowedDistance) {
+        //    employeeCondition[msg.sender] = false;
+            // Set default employee condition to not verified
+            employeeCondition[empAdderss].status = "Verified";
+            employeeCondition[empAdderss].condition = false;
+
        } else {
-           employeeCondition[msg.sender] = true;
+           employeeCondition[empAdderss].status = "Verified";
+           employeeCondition[empAdderss].condition = true;
        }
 
+    }
+
+    function getEmployees() public view returns (address[] memory) {
+        return employees;
     }
 
 
